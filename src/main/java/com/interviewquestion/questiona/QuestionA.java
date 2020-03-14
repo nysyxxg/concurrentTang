@@ -5,11 +5,13 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * 面试题A：
- * 编写程序实现,子线程循环10次,接着主线程循环20次,接着再子线程循环10次,主线程循环20次,如此反复,循环50次.
+ * 编写程序实现,子线程循环10次,接着主线程循环20次,接着再子线程循环10次,主线程循环20次,
+ * 如此反复,循环50次.
  */
 public class QuestionA {
     public static void main(String args[]) {
         ServiceTask serviceTask = new ServiceTask();
+
         Thread subThread = getSubThread(serviceTask);
         Thread mainThread =getMainThread(serviceTask);
         mainThread.start();

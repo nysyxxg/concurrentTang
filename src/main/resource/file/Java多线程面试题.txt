@@ -1,0 +1,113 @@
+1:  int float 类型数据在64位操作系统中，内存的存储格式
+   比如 8的二进制存储形式
+
+2： java 的 volatile关键字的作用  谈谈Java中的volatile
+    https://www.cnblogs.com/chengxiao/p/6528109.html
+	
+3： ThreadLocal的原理作用
+     https://www.cnblogs.com/yxysuanfa/p/7125761.html
+
+4：Java并发问题--乐观锁与悲观锁以及乐观锁的一种实现方式-CAS
+
+   https://www.cnblogs.com/qjjazry/p/6581568.html
+5： synchronized  和 lock 的区别
+
+6： 线程池的使用原理
+
+7：单例模式 ，在多线程访问下如何写
+
+8 : 冒泡排序
+
+9 ： Flink 和 Spark的区别
+
+10 ： 如何实现在10亿级数据量情况下，实现毫秒级查询检索？
+
+11 ：类加载器的原理 ClassLoad
+
+12： 为什么java的main方法是静态的方法？？
+13 ：为什么有些属性和方法需要使用static进行修饰？？
+
+
+要解释这个问题得首先了解一下什么是static： 
+static可以修饰成员变量和成员方法，被static修饰的变量和方法称之为与类相关,  但是与对象无关的变量和方法，
+所以又称被static修饰的变量和方法分别为类属型和类方法。
+
+需要注意的是在static修饰的方法体内不能直接使用非static修饰的成员变量和成员方法。 
+这也就是说static方法属于某个类而不属于某个对象，所以在static方法中是可以直接通过类名调用的而不必创建出实例。 
+而在C/C++中，其main方法并不是属于某个类的，它是一个全局的方法，
+所以当我们运行的时候，C/C++编译其能够很容易的就找到main方法并执行；
+但是行程序的时候，因为java都是以类组织在一起的，当我们运行某个程序的时候，
+我们并不知道这个main方法放在那个类中，也不知道是否要产生一个类的对象，
+所以，为了解决这个问题我们将main方法定义为static的，这样的话当这样的**这样的话当我们在执行一个java代码的时候，
+例如上图中用命令提示符java Test，编译器就会在Test类中去寻找静态的main方法，而不产生Test类的对象，
+当JVM加载Test类的时候main方法自然也就被加载了而用来作为程序的入口。
+
+
+我们知道一个程序的入口是main()方法，大家熟悉的语句是public static void main(String args[]){}.为什么必须要加上static呢？
+这是因为
+static静态方法是存储在静态存储区内的，可以通过类.方法名直接进行调用，不需要进行实例化。
+假设不使用static，那么main()方法在调用时必须先对其实例化，而main()做为程序的主入口显然不可能先对其实例化，
+所以使用static修饰，可以更方便的直接用类.main()对其调用。
+
+
+14:final 和 finally 以及  finalize()用途
+https://blog.csdn.net/u011695358/article/details/78860410
+
+15： 如果你能来进来，你有什么期望？
+
+
+
+
+
+设计模式之单例模式(线程安全)  https://www.cnblogs.com/xudong-bupt/p/3433643.html
+
+可以说单例模式是所有设计模式中最简单的一种。
+
+单例模式就是说系统中对于某类的只能有一个对象，不可能出来第二个。
+
+单例模式也是23中设计模式中在面试时少数几个会要求写代码的模式之一。主要考察的是多线程下面单例模式的线程安全性问题。
+
+1.多线程安全单例模式实例一(不使用同步锁)
+public class Singleton {
+    private static Singleton sin=new Singleton();    ///直接初始化一个实例对象
+    private Singleton(){    ///private类型的构造函数，保证其他类对象不能直接new一个该对象的实例
+    }
+    public static Singleton getSin(){    ///该类唯一的一个public方法    
+        return sin;
+    }
+}
+
+　上述代码中的一个缺点是该类加载的时候就会直接new 一个静态对象出来，当系统中这样的类较多时，会使得启动速度变慢 。
+现在流行的设计都是讲“延迟加载”，我们可以在第一次使用的时候才初始化第一个该类对象。所以这种适合在小系统。
+
+2.多线程安全单例模式实例二(使用同步方法)
+public class Singleton {  
+     private static Singleton instance;  
+     private Singleton (){
+         
+     }   
+     public static synchronized Singleton getInstance(){    //对获取实例的方法进行同步
+        if (instance == null) {    
+          instance = new Singleton();
+         }		 
+       return instance;
+     }
+ }
+ 上述代码中的一次锁住了一个方法， 这个粒度有点大 ，改进就是只锁住其中的new语句就OK。就是所谓的“双重锁”机制。
+ 
+ 3.多线程安全单例模式实例三(使用双重同步锁)
+ public class Singleton {  
+     private static Singleton instance;  
+     private Singleton (){
+     }   
+     public static Singleton getInstance(){    //对获取实例的方法进行同步
+       if (instance == null){
+           synchronized(Singleton.class){
+               if (instance == null)
+                   instance = new Singleton(); 
+           }
+       }
+       return instance;
+     }
+     
+ }

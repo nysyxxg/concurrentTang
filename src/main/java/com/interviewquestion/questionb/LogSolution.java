@@ -9,7 +9,7 @@ public class LogSolution {
     public static void main(String[] args) throws InterruptedException {
 
         final BlockingQueue<String> queue = new ArrayBlockingQueue<String>(100);
-        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        ExecutorService executorService = Executors.newFixedThreadPool(4);  // 使线程池
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
