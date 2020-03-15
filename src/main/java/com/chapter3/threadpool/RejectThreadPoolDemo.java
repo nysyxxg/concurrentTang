@@ -2,12 +2,15 @@ package com.chapter3.threadpool;
 
 import java.util.concurrent.*;
 
+/**
+ * 线程池的拒绝策略
+ */
 public class RejectThreadPoolDemo {
-    public static class MyTask implements Runnable{
 
+    public static class MyTask implements Runnable{
         @Override
         public void run() {
-            System.out.println(System.currentTimeMillis()+"Thrad ID:"+Thread.currentThread().getId());
+            System.out.println(System.currentTimeMillis()+" Thrad ID: " + Thread.currentThread().getId());
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -17,7 +20,7 @@ public class RejectThreadPoolDemo {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        MyTask task = new MyTask();
+
         ExecutorService es = new ThreadPoolExecutor(5, 5, 0L, TimeUnit.MICROSECONDS, new LinkedBlockingQueue<Runnable>(10),
                 Executors.defaultThreadFactory(), new RejectedExecutionHandler() {
             @Override
@@ -26,6 +29,7 @@ public class RejectThreadPoolDemo {
             }
         });
 
+        MyTask task = new MyTask();
         for (int i=0;i<Integer.MAX_VALUE;i++){
             es.submit(task);
             Thread.sleep(10);

@@ -5,6 +5,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 线程之前和线程之后
+ */
 public class ExtThreadPool {
 
     public static class MyTask2 implements Runnable{
