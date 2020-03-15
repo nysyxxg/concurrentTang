@@ -1,8 +1,9 @@
 package com.chapter2.sequencethread;
 
 /**
- * 
- * @author tangj
+ *
+ * 需求分析： A B C 三个线程，分别交替执行
+ * @author xxg
  *
  */
 public class Application {

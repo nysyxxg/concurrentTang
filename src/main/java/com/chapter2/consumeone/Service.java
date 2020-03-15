@@ -20,6 +20,7 @@ public class Service {
 			while (flag == true) {
 				condition.await();
 			}
+			Thread.sleep(3000);
 			System.out.println(Thread.currentThread().getName() + "-----生产-----");
 			number++;
 			System.out.println("number: " + number);
@@ -43,6 +44,7 @@ public class Service {
 			while (flag == false) {
 				condition.await();
 			}
+			Thread.sleep(1000);
 			System.out.println(Thread.currentThread().getName() + "-----消费-----");
 			number--;
 			System.out.println("number: " + number);

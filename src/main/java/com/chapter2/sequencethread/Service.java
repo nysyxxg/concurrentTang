@@ -16,10 +16,14 @@ public class Service {
 	public void excuteA() {
 		try {
 			lock.lock();
+			System.out.println(Thread.currentThread().getName() + "进入service");
 			while (nextThread != 1) {
 				conditionA.await();
 			}
-			System.out.println(Thread.currentThread().getName() + "执行");
+			Thread.sleep(3000);
+			for (int i = 0; i <= 2 ; i++) {
+				System.out.println(Thread.currentThread().getName() + "执行 " + i);
+			}
 			nextThread = 2;
 			conditionB.signalAll();
 		} catch (InterruptedException e) {
@@ -32,10 +36,14 @@ public class Service {
 	public void excuteB() {
 		try {
 			lock.lock();
+			System.out.println(Thread.currentThread().getName() + "进入service");
 			while (nextThread != 2) {
 				conditionB.await();
 			}
-			System.out.println(Thread.currentThread().getName() + " 执行");
+			Thread.sleep(3000);
+			for (int i = 0; i < 2 ; i++) {
+				System.out.println(Thread.currentThread().getName() + "执行 " + i);
+			}
 			nextThread = 3;
 			conditionC.signalAll();
 		} catch (InterruptedException e) {
@@ -48,10 +56,14 @@ public class Service {
 	public void excuteC() {
 		try {
 			lock.lock();
+			System.out.println(Thread.currentThread().getName() + "进入service");
 			while (nextThread != 3) {
 				conditionC.await();
 			}
-			System.out.println(Thread.currentThread().getName() + "执行");
+			Thread.sleep(3000);
+			for (int i = 0; i < 2 ; i++) {
+				System.out.println(Thread.currentThread().getName() + "执行 " + i);
+			}
 			nextThread = 1;
 			conditionA.signalAll();
 		} catch (InterruptedException e) {
