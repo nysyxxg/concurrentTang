@@ -3,11 +3,11 @@ package com.chapter3.threadpool;
 import java.util.concurrent.*;
 
 public class ThreadFactoryDemo {
-    public static class MyTask1 implements Runnable{
 
+    public static class MyTask1 implements Runnable{
         @Override
         public void run() {
-            System.out.println(System.currentTimeMillis()+"Thrad ID:"+Thread.currentThread().getId());
+            System.out.println(System.currentTimeMillis()+" Thrad ID:"+Thread.currentThread().getName());
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -17,7 +17,7 @@ public class ThreadFactoryDemo {
     }
 
     public static void main(String[] args){
-          MyTask1 task = new MyTask1();
+
         ExecutorService es = new ThreadPoolExecutor(5, 5, 0L, TimeUnit.MICROSECONDS, new SynchronousQueue<Runnable>(), new ThreadFactory() {
             @Override
             public Thread newThread(Runnable r) {
@@ -27,6 +27,8 @@ public class ThreadFactoryDemo {
                 return  t;
             }
         });
+
+        MyTask1 task = new MyTask1();
         for (int i = 0;i<=4;i++){
            es.submit(task);
         }
