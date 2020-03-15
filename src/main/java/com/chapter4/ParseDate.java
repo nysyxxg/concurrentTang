@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * ThreadLocal 的使用
+ */
 public class ParseDate implements Runnable{
 
     private static ThreadLocal<SimpleDateFormat> tl = new ThreadLocal<>();

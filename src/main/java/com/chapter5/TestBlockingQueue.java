@@ -3,12 +3,14 @@ package com.chapter5;
 import java.util.concurrent.*;
 
 /**
+ * 使用阻塞队列，实现一个消费者和生产者模式
  * @author tangj
  */
 public class TestBlockingQueue {
 
     protected class WorkDesk {
 
+        // 线程安全的，基于链表的阻塞队列
         BlockingQueue<String> desk = new LinkedBlockingQueue<String>(10);
 
         public void washDish() throws InterruptedException {
@@ -68,15 +70,15 @@ public class TestBlockingQueue {
     }
 
     public static void main(String args[]) {
+
         TestBlockingQueue testQueue = new TestBlockingQueue();
         WorkDesk workDesk = testQueue.new WorkDesk();
-
-        ExecutorService service = Executors.newCachedThreadPool();
 
         Producer producer1 = testQueue.new Producer("生产中-2-",workDesk);
         Producer producer2 = testQueue.new Producer("生产者-2-",workDesk);
         Consumer consumer = testQueue.new Consumer("消费者-1-",workDesk);
 
+        ExecutorService service = Executors.newCachedThreadPool();
         service.submit(producer1);
         service.submit(producer2);
         service.submit(consumer);
