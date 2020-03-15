@@ -8,18 +8,19 @@ public class CyclicBarrierDemo {
 
     public static class Soldier implements Runnable{
 
-        public String soldier;
+        public String soldierName;
         private final CyclicBarrier cyclic;
+
         Soldier(CyclicBarrier cyclic,String soldierName){
             this.cyclic = cyclic;
-            this.soldier = soldierName;
+            this.soldierName = soldierName;
         }
         @Override
         public void run() {
             try {
-                cyclic.await();
+                cyclic.await();  // 士兵来了，就要等待,一直所有的的士兵都要集合完成
                 doWork();
-                cyclic.await();
+                cyclic.await();// 一直等待所有的士兵完成任务
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (BrokenBarrierException e) {
@@ -33,7 +34,7 @@ public class CyclicBarrierDemo {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(soldier+"任务完成");
+            System.out.println(soldierName +  " 任务完成");
         }
     }
 
