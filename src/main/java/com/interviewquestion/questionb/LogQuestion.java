@@ -9,7 +9,8 @@ package com.interviewquestion.questionb;
 public class LogQuestion {
     public static void main(String[] args) {
 
-        System.out.println("begin:" + (System.currentTimeMillis() / 1000));
+        long begin = System.currentTimeMillis()/1000;
+        System.out.println("begin:"+ begin );
             /*
             模拟处理16行日志，下面的代码产生了16个日志对象，当前代码需要运行16秒才能打印完这些日志。
             修改程序代码，开四个线程让这16个对象在4秒钟打完。
@@ -18,7 +19,9 @@ public class LogQuestion {
             final String log = "" + (i + 1);//这行代码不能改动
                 LogQuestion.parseLog(log);
         }
-        System.out.println("end:" + (System.currentTimeMillis() / 1000));
+        long end = System.currentTimeMillis()/1000;
+        System.out.println("end: "+ end );
+        System.out.println("花费的时间: "+  (end- begin));
     }
 
     //parseLog方法内部的代码不能改动
