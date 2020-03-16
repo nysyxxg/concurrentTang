@@ -18,22 +18,24 @@ public class QuestionA {
         subThread.start();
     }
 
+    // 定义子线程
     private static Thread getSubThread(final ServiceTask service) {
         return new Thread() {
             @Override
             public void run() {
-                for (int i = 0;i<50;i++) {
+                for (int i = 0;i<50;i++) {// 外层循环50次
                     service.subExecute();
                 }
             }
         };
     }
 
+    // 定义主线程
     private static Thread getMainThread(final ServiceTask service) {
         return new Thread() {
             @Override
             public void run() {
-                for (int i = 0;i<50;i++) {
+                for (int i = 0;i<50;i++) {// 外层循环50次
                     service.mainExecute();
                 }
             }
@@ -57,9 +59,9 @@ class ServiceTask {
      */
     public void subExecute() {
         try {
-            lock.lock();
-            while (nextThread != 1) {
-                subCond.await();
+            lock.lock();  // 获取锁
+            while (nextThread != 1) {  //判断标识位
+                subCond.await(); // 等待
             }
             for (int i = 1; i <= 20; i++) {
                 System.out.println("sub线程执行" + i);
